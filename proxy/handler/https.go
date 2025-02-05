@@ -5,9 +5,9 @@ import (
 	"net"
 	"regexp"
 	"strconv"
-	"syscall"
 
 	"github.com/xvzc/SpoofDPI/packet"
+	"github.com/xvzc/SpoofDPI/proxy/handler/setsockoptint"
 	"github.com/xvzc/SpoofDPI/util"
 	"github.com/xvzc/SpoofDPI/util/log"
 )
@@ -42,7 +42,7 @@ func setTTL(conn net.Conn, ttl int) error {
 		return err
 	}
 	return rawConn.Control(func(fd uintptr) {
-		syscall.SetsockoptInt(int(fd), syscall.IPPROTO_IP, syscall.IP_TTL, ttl)
+		setsockoptint.SetsockoptInt(fd, ttl)
 	})
 }
 
